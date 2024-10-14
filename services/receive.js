@@ -304,7 +304,7 @@ module.exports = class Receive {
       ". " +
       i18n.__("get_started.help");
 
-    let response = Response.genQuickReply(welcomeMessage, [
+    /*let response = Response.genQuickReply(welcomeMessage, [
       {
         title: i18n.__("menu.suggestion"),
         payload: "CURATION"
@@ -317,7 +317,11 @@ module.exports = class Receive {
         title: i18n.__("menu.product_launch"),
         payload: "PRODUCT_LAUNCH"
       }
-    ]);
+    ]);*/
+    let response = {
+      text: "1.-PASAJES  2.-VIAJES 3.- CONSULTAS",
+      quick_replies: []
+    };
 
     let requestBody = {
       recipient: {
