@@ -37,7 +37,6 @@ module.exports = class Receive {
     try {
       if (event.message) {
         let message = event.message;
-
         if (message.quick_reply) {
           responses = this.handleQuickReply();
         } else if (message.attachments) {
@@ -86,18 +85,21 @@ module.exports = class Receive {
     let greeting = this.firstEntity(event.message.nlp, "greetings");
     let message = event.message.text.trim().toLowerCase();
 
+    console.log("USER STEP: ", this.user);
+    console.log("USER STEP: ", JSON.stringify(this.user));
+
     let response;
     console.log("ESTE ES EL MENSAJE", message)
-    if (message == 1) {
-      response = Response.genNuxMessage(this.user);
+    if (message == 1 && this.user.step == 1) {
+      response = Response.genText("Encuentre nuestras sucursales, horarios, teléfonos y direcciones aquí: \n URL hacia https://transcopacabanasa.com.bo/sucursales");
       return response;
     }
-    if (message == 2) {
-      response = Response.genNuxMessage(this.user);
+    if (message == 2 && this.user.step == 1 ) {
+      response = Response.genText("¡Consulte nuestras rutas y horarios, elija su asiento y compre su pasaje al instante!  \n Conozca nuestros buses, horarios y destinos: \n https://transcopacabanasa.com.bo/pasajes \n ¿Listo para viajar? ¡Compre en línea, aceptamos el método de pago de su preferencia (QR, Tarjeta de Crédito/Débito, Tigo Money) y reciba su pasaje al instante: \n  https://transcopacabana.pagoseguro.cloud/#/sale-tickets");
       return response;
     }
     if (message == 3) {
-      response = Response.genNuxMessage(this.user);
+      response = Response.genText("¡Rastree su carga o encomienda de forma rápida y fácil con solamente su número de guía! \n https://transcopacabana.pagoseguro.cloud/#/tracking");
       return response;
     }
     if (

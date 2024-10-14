@@ -18,6 +18,7 @@ module.exports = class User {
     this.locale = "en_US";
     this.timezone = "";
     this.gender = "neutral";
+    this.step = 0;
   }
   setProfile(profile) {
     this.firstName = profile.firstName || "";
@@ -25,5 +26,6 @@ module.exports = class User {
     this.locale = profile.locale || "";
     this.timezone = profile.timezone || "";
     this.gender = profile.gender || "";
+    this.step = 0;
   }
 };
