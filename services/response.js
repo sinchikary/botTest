@@ -16,7 +16,7 @@ module.exports = class Response {
   static genQuickReply(text, quickReplies) {
     let response = {
       text: text,
-      quick_replies: []
+      
     };
 
     for (let quickReply of quickReplies) {
@@ -152,8 +152,8 @@ module.exports = class Response {
     );
 
     let response = {
-      text: "1.- PASAJES 2.- SOBRE NOSOTROS 3.- CONSULTAS",
-      quick_replies: []
+      text: "1.- PASAJES 2.- SOBRE NOSOTROS 3.- algo mas",
+      
     };
     let guide = this.genText(i18n.__("get_started.guidance"));
 

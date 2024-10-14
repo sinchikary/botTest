@@ -320,7 +320,7 @@ module.exports = class Receive {
     ]);*/
     let response = {
       text: "1.-PASAJES  2.-VIAJES 3.- CONSULTAS",
-      quick_replies: []
+      
     };
 
     let requestBody = {
