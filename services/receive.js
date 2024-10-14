@@ -42,6 +42,7 @@ module.exports = class Receive {
         } else if (message.attachments) {
           responses = this.handleAttachmentMessage();
         } else if (message.text) {
+          this.user.step = 1;
           responses = this.handleTextMessage();
         }
       } else if (event.postback) {
