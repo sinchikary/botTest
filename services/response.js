@@ -151,9 +151,10 @@ module.exports = class Response {
       })
     );
 
-    let guide = this.genText(i18n.__("get_started.guidance"));
+    //let guide = this.genText(i18n.__("get_started.guidance"));
+    let guide = this.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas");
 
-    let curation = this.genQuickReply(i18n.__("get_started.help"), [
+    /*let curation = this.genQuickReply(i18n.__("get_started.help"), [
       {
         title: i18n.__("menu.suggestion"),
         payload: "CURATION"
@@ -166,8 +167,9 @@ module.exports = class Response {
         title: i18n.__("menu.product_launch"),
         payload: "PRODUCT_LAUNCH"
       }
-    ]);
+    ]);*/
 
-    return [welcome, guide, curation];
+    //return [welcome, guide, curation];
+    return [welcome, guide];
   }
 };

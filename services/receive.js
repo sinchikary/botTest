@@ -87,7 +87,19 @@ module.exports = class Receive {
     let message = event.message.text.trim().toLowerCase();
 
     let response;
-
+    console.log("ESTE ES EL MENSAJE", message)
+    if (message == 1) {
+      response = Response.genNuxMessage(this.user);
+      return response;
+    }
+    if (message == 2) {
+      response = Response.genNuxMessage(this.user);
+      return response;
+    }
+    if (message == 3) {
+      response = Response.genNuxMessage(this.user);
+      return response;
+    }
     if (
       (greeting && greeting.confidence > 0.8) ||
       message.includes("start over")
