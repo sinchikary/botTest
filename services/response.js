@@ -151,6 +151,10 @@ module.exports = class Response {
       })
     );
 
+    let response = {
+      text: "1.- PASAJES 2.- SOBRE NOSOTROS 3.- CONSULTAS",
+      quick_replies: []
+    };
     let guide = this.genText(i18n.__("get_started.guidance"));
 
     let curation = this.genQuickReply(i18n.__("get_started.help"), [
@@ -168,6 +172,6 @@ module.exports = class Response {
       }
     ]);
 
-    return [welcome, guide, curation];
+    return [welcome, guide, response];
   }
 };

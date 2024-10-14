@@ -129,7 +129,7 @@ app.post("/webhook", (req, res) => {
         if (senderPsid != null && senderPsid != undefined) {
           if (!(senderPsid in users)) {
             if (!guestUser) {
-              console.log("Profile is guest:", error);
+              console.log("Profile is guest:");
               // Make call to UserProfile API only if user is not guest
               let user = new User(senderPsid);
               GraphApi.getUserProfile(senderPsid)
