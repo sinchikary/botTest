@@ -108,7 +108,9 @@ module.exports = class Receive {
           })
         ),
         Response.genText(i18n.__("get_started.guidance")),
-        Response.genQuickReply(i18n.__("get_started.help"), [
+        
+        Response.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas"),
+        /*Response.genQuickReply(i18n.__("get_started.help"), [
           {
             title: i18n.__("menu.suggestion"),
             payload: "CURATION"
@@ -121,7 +123,7 @@ module.exports = class Receive {
             title: i18n.__("menu.product_launch"),
             payload: "PRODUCT_LAUNCH"
           }
-        ])
+        ])*/
       ];
     }
 
