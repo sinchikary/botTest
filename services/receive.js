@@ -103,9 +103,13 @@ module.exports = class Receive {
       response = Response.genText("¡Rastree su carga o encomienda de forma rápida y fácil con solamente su número de guía! \n https://transcopacabana.pagoseguro.cloud/#/tracking");
       return response;
     }
+    if (message == 4) {
+      response = Response.genText("Gracias por chatear conmigo. Te pasaré con uno de nuestros agentes o tambien puede mandar un mensaje al siguiente número : (+591) 72233555  \n Linea de atención al cliente : (+591) 72233555 \n Envienos un correo electrónico: info@transcopacabanasa.com \n Búsquenos en nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia/Teléfonos: 4-4252004, 4-4235927");
+      return response;
+    }
     if (
       (greeting && greeting.confidence > 0.8) ||
-      message.includes("start over")
+      message.includes("hola")
     ) {
       response = Response.genNuxMessage(this.user);
     } else if (Number(message)) {
