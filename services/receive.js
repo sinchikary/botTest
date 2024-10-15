@@ -104,7 +104,7 @@ module.exports = class Receive {
       return response;
     }
     if (message == 4) {
-      response = Response.genText("Gracias por chatear conmigo. Te pasaré con uno de nuestros agentes o tambien puede mandar un mensaje al siguiente número : (+591) 72233555  \n Linea de atención al cliente : (+591) 72233555 \n Envienos un correo electrónico: info@transcopacabanasa.com \n Búsquenos en nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia/Teléfonos: 4-4252004, 4-4235927");
+      response = Response.genText("Gracias por chatear conmigo. Te pasaré con uno de nuestros agentes o tambien puede mandar un mensaje al siguiente número : https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n Linea de atención al cliente : (+591) 72233555 \n Envienos un correo electrónico: info@transcopacabanasa.com \n Búsquenos en nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia/Teléfonos: 4-4252004, 4-4235927");
       return response;
     }
     if (
@@ -128,7 +128,7 @@ module.exports = class Receive {
         ),
         Response.genText(i18n.__("get_started.guidance")),
         
-        Response.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas"),
+        Response.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas \n 4. Consultas"),
         /*Response.genQuickReply(i18n.__("get_started.help"), [
           {
             title: i18n.__("menu.suggestion"),

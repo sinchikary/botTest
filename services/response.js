@@ -153,7 +153,7 @@ module.exports = class Response {
     
     //let guide = this.genText(i18n.__("get_started.guidance"));
     let welcome = this.genText(`¡Hola👋, ${user.firstName}! Gracias por contactarse con Trans Copacabana S.A. ¿Como podemos ayudarle?`);
-    let guide = this.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas");
+    let guide = this.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas \n 4. Consultas");
 
     /*let curation = this.genQuickReply(i18n.__("get_started.help"), [
       {
