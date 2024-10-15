@@ -88,28 +88,33 @@ module.exports = class Receive {
 
     console.log("USER STEP: ", this.user);
     console.log("USER STEP: ", JSON.stringify(this.user));
+    const greetings = ["hola", "buenas tardes", "buenas", "buenos días", "buenas noches"];
 
     let response;
     console.log("ESTE ES EL MENSAJE", message)
+    if (message == 0) {
+      response = Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas");
+      return response;
+    }
     if (message == 1) {
-      response = Response.genText("Encuentre nuestras sucursales, horarios, teléfonos y direcciones aquí: \n URL hacia https://transcopacabanasa.com.bo/sucursales");
+      response = Response.genText("Encuentre nuestras sucursales, horarios, teléfonos y direcciones aquí: \n 🌐 https://transcopacabanasa.com.bo/sucursales");
       return response;
     }
     if (message == 2) {
-      response = Response.genText("¡Consulte nuestras rutas y horarios, elija su asiento y compre su pasaje al instante!  \n Conozca nuestros buses, horarios y destinos: \n https://transcopacabanasa.com.bo/pasajes \n ¿Listo para viajar? ¡Compre en línea, aceptamos el método de pago de su preferencia (QR, Tarjeta de Crédito/Débito, Tigo Money) y reciba su pasaje al instante: \n  https://transcopacabana.pagoseguro.cloud/#/sale-tickets");
+      response = Response.genText("¡Consulte nuestras rutas y horarios, elija su asiento y compre su pasaje al instante!  \n\n 🚌 Conozca nuestros buses, horarios y destinos: \n 🌐 https://transcopacabanasa.com.bo/pasajes \n\n ¿Listo para viajar 🚌? ¡Compre en línea, aceptamos el método de pago de su preferencia (QR, Tarjeta de Crédito/Débito, Tigo Money) y reciba su pasaje al instante: \n 💳 https://transcopacabana.pagoseguro.cloud/#/sale-tickets");
       return response;
     }
     if (message == 3) {
-      response = Response.genText("¡Rastree su carga o encomienda de forma rápida y fácil con solamente su número de guía! \n https://transcopacabana.pagoseguro.cloud/#/tracking");
+      response = Response.genText("¡Rastree su carga o encomienda de forma rápida y fácil con solamente su número de guía! \n\n 🔍📦 https://transcopacabana.pagoseguro.cloud/#/tracking");
       return response;
     }
     if (message == 4) {
-      response = Response.genText("Gracias por chatear conmigo. Te pasaré con uno de nuestros agentes o tambien puede mandar un mensaje al siguiente número : https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n Linea de atención al cliente : (+591) 72233555 \n Envienos un correo electrónico: info@transcopacabanasa.com \n Búsquenos en nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia/Teléfonos: 4-4252004, 4-4235927");
+      response = Response.genText("Gracias por chatear conmigo. Te pasaré con uno de nuestros agentes 👨‍💼 o también puede mandar un mensaje al siguiente número: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n 📞 TELÉFONOS: 4-4252004, 4-4235927");
       return response;
     }
     if (
       (greeting && greeting.confidence > 0.8) ||
-      message.includes("hola")
+      greetings.some(greeting => message.includes(greeting))
     ) {
       response = Response.genNuxMessage(this.user);
     } else if (Number(message)) {
@@ -122,13 +127,14 @@ module.exports = class Receive {
     } else {
       response = [
         Response.genText(
-          i18n.__("fallback.any", {
-            message: event.message.text
-          })
+          `Lo siento, pero no reconozco: ${message}`,
+          //i18n.__("fallback.any", {
+          //  message: event.message.text
+          //})
         ),
-        Response.genText(i18n.__("get_started.guidance")),
-        
-        Response.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas \n 4. Consultas"),
+        //Response.genText(i18n.__("get_started.guidance")),
+        Response.genText("De todas formas, use el siguiente menu para seleccionar el servicio que necesite."),
+        Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas"),
         /*Response.genQuickReply(i18n.__("get_started.help"), [
           {
             title: i18n.__("menu.suggestion"),
