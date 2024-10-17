@@ -42,7 +42,6 @@ module.exports = class Receive {
         } else if (message.attachments) {
           responses = this.handleAttachmentMessage();
         } else if (message.text) {
-          this.user.step = 1;
           responses = this.handleTextMessage();
         }
       } else if (event.postback) {
@@ -88,43 +87,75 @@ module.exports = class Receive {
 
     console.log("USER STEP: ", this.user);
     console.log("USER STEP: ", JSON.stringify(this.user));
-    const greetings = ["hola", "buenas tardes", "buenas", "buenos días", "buenas noches"];
-
+    const greetings = ["hola", "buenas tardes", "buenas", "buenos días", "buenos dias", "buenas noches"];
+    const additionalMenu = Response.genBackMenu();
     let response;
     console.log("ESTE ES EL MENSAJE", message)
+
+    if (this.user.step == 1) {
+      if (message == "a") {
+        response = Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas");
+        this.user.step == 0
+        return response;
+      }
+      if (message == "b") {
+        response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n\n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
+        this.user.step == 0
+        return response;
+      }
+      if (message == "c") {
+        response = Response.genGoodbye();
+        this.user.step == 0
+        return response;
+      }  
+    }
     if (message == 0) {
       response = Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas");
-      return response;
+      this.user.step = 1;
+      return [response, additionalMenu];
     }
     if (message == 1) {
       response = Response.genText("Encuentre nuestras sucursales, horarios, teléfonos y direcciones aquí: \n 🌐 https://transcopacabanasa.com.bo/sucursales");
-      return response;
+      this.user.step = 1;
+      return [response, additionalMenu];
     }
     if (message == 2) {
       response = Response.genText("¡Consulte nuestras rutas y horarios, elija su asiento y compre su pasaje al instante!  \n\n 🚌 Conozca nuestros buses, horarios y destinos: \n 🌐 https://transcopacabanasa.com.bo/pasajes \n\n ¿Listo para viajar 🚌? ¡Compre en línea, aceptamos el método de pago de su preferencia (QR, Tarjeta de Crédito/Débito, Tigo Money) y reciba su pasaje al instante: \n 💳 https://transcopacabana.pagoseguro.cloud/#/sale-tickets");
-      return response;
+      this.user.step = 1;
+      return [response, additionalMenu];
     }
     if (message == 3) {
       response = Response.genText("¡Rastree su carga o encomienda de forma rápida y fácil con solamente su número de guía! \n\n 🔍📦 https://transcopacabana.pagoseguro.cloud/#/tracking");
-      return response;
+      this.user.step = 1;
+      return [response, additionalMenu];
     }
     if (message == 4) {
-      response = Response.genText("Gracias por chatear conmigo. Te pasaré con uno de nuestros agentes 👨‍💼 o también puede mandar un mensaje al siguiente número: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n 📞 TELÉFONOS: 4-4252004, 4-4235927");
-      return response;
+      response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n\n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
+      this.user.step = 1;
+      return [response, additionalMenu];
     }
     if (
-      (greeting && greeting.confidence > 0.8) ||
       greetings.some(greeting => message.includes(greeting))
     ) {
+      this.user.step == 0;
       response = Response.genNuxMessage(this.user);
-    } else if (Number(message)) {
-      response = Order.handlePayload("ORDER_NUMBER");
-    } else if (message.includes("#")) {
-      response = Survey.handlePayload("CSAT_SUGGESTION");
-    } else if (message.includes(i18n.__("care.help").toLowerCase())) {
-      let care = new Care(this.user, this.webhookEvent);
-      response = care.handlePayload("CARE_HELP");
+    //} else if (Number(message)) {
+    //  response = Order.handlePayload("ORDER_NUMBER");
+    //} else if (message.includes("#")) {
+    //  response = Survey.handlePayload("CSAT_SUGGESTION");
+    //} else if (message.includes(i18n.__("care.help").toLowerCase())) {
+    //  let care = new Care(this.user, this.webhookEvent);
+    //  response = care.handlePayload("CARE_HELP");
     } else {
+      if (this.user.step == 1) {
+        response = [
+          Response.genText(
+            `Lo siento, pero no reconozco: ${message}`,
+          ),
+          Response.genText("Por favor, use el siguiente menú para seleccionar el servicio que necesite."),
+          Response.genBackMenu(),
+        ];
+      }
       response = [
         Response.genText(
           `Lo siento, pero no reconozco: ${message}`,
@@ -133,7 +164,7 @@ module.exports = class Receive {
           //})
         ),
         //Response.genText(i18n.__("get_started.guidance")),
-        Response.genText("De todas formas, use el siguiente menu para seleccionar el servicio que necesite."),
+        Response.genText("Por favor, use el siguiente menú para seleccionar el servicio que necesite."),
         Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas"),
         /*Response.genQuickReply(i18n.__("get_started.help"), [
           {
