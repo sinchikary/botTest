@@ -99,7 +99,7 @@ module.exports = class Receive {
         return response;
       }
       if (message == "b") {
-        response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n\n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
+        response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp al siguiente número: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
         this.user.step == 0
         return response;
       }
@@ -130,7 +130,7 @@ module.exports = class Receive {
       return [response, additionalMenu];
     }
     if (message == 4) {
-      response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n\n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
+      response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp al siguiente número: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n\n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
       this.user.step = 1;
       return [response, additionalMenu];
     }
