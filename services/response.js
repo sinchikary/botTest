@@ -144,7 +144,7 @@ module.exports = class Response {
     return response;
   }
   static genBackMenu() {
-    let welcome = this.genText(`a. Menu principal b. Hablar con operador c. Finalizar`);
+    let welcome = this.genText(`Espero haber podido responder a tu consulta ¿Necesíta ayuda adicional?\n\n a. Menu principal \n b. Hablar con operador \n c. Finalizar`);
     return welcome
   }
 
