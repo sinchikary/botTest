@@ -60,7 +60,9 @@ module.exports = class Receive {
         will fix the issue shortly!`
       };
     }
-
+    if (responses == "") {
+      return;
+    }
     if (Array.isArray(responses)) {
       let delay = 0;
       for (let response of responses) {
@@ -80,10 +82,18 @@ module.exports = class Receive {
     );
 
     let event = this.webhookEvent;
-
+    const currentTime = Date.now();    
     // check greeting is here and is confident
-    let greeting = this.firstEntity(event.message.nlp, "hola");
+    //let greeting = this.firstEntity(event.message.nlp, "hola");
     let message = event.message.text.trim().toLowerCase();
+
+    if (this.user.timestamp !== undefined) {
+      const  timeDifference = currentTime - inputDate; // Difference in milliseconds
+      const isAtLeast30MinutesPassed = timeDifference >= 1800000;
+      if (isAtLeast30MinutesPassed) {
+        this.user.step = 0;
+      }
+    }
 
     console.log("USER STEP: ", this.user);
     console.log("USER STEP: ", JSON.stringify(this.user));
@@ -91,21 +101,24 @@ module.exports = class Receive {
     const additionalMenu = Response.genBackMenu();
     let response;
     console.log("ESTE ES EL MENSAJE", message)
-
+    if (this.user.step == 2) {
+      return;
+    }
     if (this.user.step == 1) {
       if (message == "a") {
         response = Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas");
-        this.user.step == 0
+        this.user.step = 0
         return response;
       }
       if (message == "b") {
         response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp al siguiente número: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
-        this.user.step == 0
+        this.user.step = 2
+        this.user.timestamp = new Date.now();
         return response;
       }
       if (message == "c") {
         response = Response.genGoodbye();
-        this.user.step == 0
+        this.user.step = 0
         return response;
       }  
     }
@@ -131,13 +144,13 @@ module.exports = class Receive {
     }
     if (message == 4) {
       response = Response.genText("Gracias por chatear conmigo. Le pasaré con uno de nuestros operadores 👨‍💼 o también puede mandar un mensaje por WhatsApp al siguiente número: \n 📱 https://wa.me/59172233555?text=Tengo%20una%20pregunta  \n\n 📞 Nuestra linea de atención al cliente : (+591) 72233555 \n\n ✉️ Nuestro correo electrónico: info@transcopacabanasa.com \n\n 🏢 Nuestra Oficina Central: Calle Luis Uriona Nro. 1936 Cochabamba, Bolivia \n\n 📞 Teléfonos: \n 4-4252004, 4-4235927");
-      this.user.step = 1;
+      this.user.step = 2;
       return [response, additionalMenu];
     }
     if (
       greetings.some(greeting => message.includes(greeting))
     ) {
-      this.user.step == 0;
+      this.user.step = 0;
       response = Response.genNuxMessage(this.user);
     //} else if (Number(message)) {
     //  response = Order.handlePayload("ORDER_NUMBER");
@@ -149,38 +162,17 @@ module.exports = class Receive {
     } else {
       if (this.user.step == 1) {
         response = [
-          Response.genText(
-            `Lo siento, pero no reconozco: ${message}`,
-          ),
+          //Response.genText(`Lo siento, pero no reconozco: ${message}`,),
+          //Response.genText("Por favor, use el siguiente menú para seleccionar el servicio que necesite."),
+          Response.genAuxMenu(),
+        ];
+      } else {
+        response = [
+          //Response.genText(i18n.__("get_started.guidance")),
           Response.genText("Por favor, use el siguiente menú para seleccionar el servicio que necesite."),
-          Response.genBackMenu(),
+          Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas"),
         ];
       }
-      response = [
-        Response.genText(
-          `Lo siento, pero no reconozco: ${message}`,
-          //i18n.__("fallback.any", {
-          //  message: event.message.text
-          //})
-        ),
-        //Response.genText(i18n.__("get_started.guidance")),
-        Response.genText("Por favor, use el siguiente menú para seleccionar el servicio que necesite."),
-        Response.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas"),
-        /*Response.genQuickReply(i18n.__("get_started.help"), [
-          {
-            title: i18n.__("menu.suggestion"),
-            payload: "CURATION"
-          },
-          {
-            title: i18n.__("menu.help"),
-            payload: "CARE_HELP"
-          },
-          {
-            title: i18n.__("menu.product_launch"),
-            payload: "PRODUCT_LAUNCH"
-          }
-        ])*/
-      ];
     }
 
     return response;

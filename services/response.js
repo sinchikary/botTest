@@ -147,6 +147,11 @@ module.exports = class Response {
     let welcome = this.genText(`Espero haber podido responder a tu consulta ¿Necesíta ayuda adicional?\n\n a. Menu principal \n b. Hablar con operador \n c. Finalizar`);
     return welcome
   }
+  
+  static genAuxMenu() {
+    let welcome = this.genText(`Por favor, use el siguiente menú para seleccionar el servicio que necesite. \n\n a. Menu principal \n b. Hablar con operador \n c. Finalizar`);
+    return welcome
+  }
 
   static genGoodbye() {
     let goodbye = this.genText(`Gracias por usar nuestro servicio, que tenga un excelente día 👋.`);
@@ -154,15 +159,8 @@ module.exports = class Response {
   }
 
   static genNuxMessage(user) {
-    //let welcome = this.genText(
-    //  i18n.__("get_started.welcome", {
-    //    userFirstName: user.firstName
-    //  })
-    //);
-    
-    //let guide = this.genText(i18n.__("get_started.guidance"));
     let welcome = this.genText(`¡Hola👋, ${user.firstName}! Gracias por contactarse con Trans Copacabana S.A. ¿Cómo podemos ayudarle?`);
-    let guide = this.genText("1. Oficinas, Sucursales y Horarios \n 2. Compra de Pasajes y Rutas \n 3. Rastreo de Carga y Encomiendas \n 4. Consultas");
+    let guide = this.genText("1. 🏢 Oficinas, Sucursales y Horarios \n 2. 🎟️ Compra de Pasajes y Rutas \n 3. 📦 Rastreo de Carga y Encomiendas \n 4. ❓ Consultas");
 
     /*let curation = this.genQuickReply(i18n.__("get_started.help"), [
       {
